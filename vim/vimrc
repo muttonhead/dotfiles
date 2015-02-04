@@ -1,0 +1,108 @@
+" Be iMproved dammit
+set nocompatible
+filetype off
+set noswapfile
+
+" Unicode
+set encoding=utf8
+
+" tags
+:set tags=./tags
+
+" Vundle
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" Plugins
+Plugin 'gmarik/Vundle.vim'
+Plugin 'wincent/Command-T'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'fholgado/minibufexpl.vim'
+Plugin 'vim-scripts/taglist.vim'
+Plugin 'marcus/autotag.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'ivalkeen/vim-simpledb'
+Plugin 'maciakl/vim-neatstatus'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'muttonhead/vim-maven-utils'
+Plugin 'tpope/vim-surround'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'rking/ag.vim'
+call vundle#end()
+
+" Command-T
+let g:CommandTMaxFiles = 100000
+set wildignore=*.swp,*.class,*.jar,*.png,*.jpeg,*.jpg,**/target/**
+
+" Nerd Tree
+nnoremap <silent> <C-N> :NERDTreeToggle<CR>
+let g:NERDTreeDirArrows=0
+let g:NERDTreeWinSize=50
+
+" minibufexpl
+let g:miniBufExplMapWindowNavVim = 1
+nnoremap <silent> H :bprev<CR>
+nnoremap <silent> L :bnext<CR>
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" taglist
+nnoremap <silent> <C-O> :TlistToggle<CR>
+let Tlist_WinWidth = 60
+
+" solarized colors
+syntax enable
+:set background=dark
+colorscheme solarized
+
+" YouCompleteMe
+inoremap <expr> <C-j> ("\<C-n>")
+inoremap <expr> <C-k> ("\<C-p>")
+
+" ag
+ca Ag Ag!
+
+" post vundle thing
+filetype plugin indent on
+
+" tab setup
+:set tabstop=4
+:set cindent
+:set shiftwidth=4
+
+" highlight cursor line
+set cursorline
+
+" show linenumbers
+:set number
+:set relativenumber
+
+" keep cursor away from edge
+set so=15
+
+" column width
+:set colorcolumn=100
+
+" map leader to ,
+:let mapleader = ","
+
+" read a .vim.local
+if filereadable( ".vim.local" ) 
+	so .vim.local
+endif
+
+" dont auto // comment 
+au FileType * setlocal comments-=:// comments+=f://
+
+" make K bring up javadoc
+:map <silent> K :help <c-r><c-w> <bar> only <CR>
+
+" map space to write
+:map <space> :w<CR>
+
+" search for current word
+nnoremap <silent><Leader>a :Ag! <cword><cr>

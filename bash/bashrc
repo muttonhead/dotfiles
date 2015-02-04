@@ -1,0 +1,19 @@
+# Enable auto complete for sudo
+complete -cf sudo
+
+# Set environment variables
+if [ -f ~/dotfiles/bash/aliasrc ]; then
+	source ~/dotfiles/bash/bashenv
+fi
+
+# Set aliases
+if [ -f ~/dotfiles/bash/aliasrc ]; then
+	source ~/dotfiles/bash/aliasrc
+fi
+
+# git completion
+if [ -f ~/dotfiles/bash/git-completion.bash ]; then
+	source ~/dotfiles/bash/git-completion.bash
+fi
+
+eval $(dircolors -b)

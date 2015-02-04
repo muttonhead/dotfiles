@@ -1,0 +1,36 @@
+" Make
+set makeprg=mvn
+command! Log execute "!less epsilon-war/log/server.log"
+command! Tail execute "!tail -f epsilon-war/log/server.log"
+set errorformat=\[ERROR]\ %f:[%l\\,%v]\ %m
+
+" eclimd
+nnoremap <silent><Leader>o :JavaImportOrganize<CR>
+let g:EclimCompletionMethod = 'omnifunc'
+
+" Build Commands
+command! BuildGwt execute "make! install -pl :thinktank-client-gwt -am -PskipTests"
+command! BuildJs execute "make! install -pl :epsilon-client-js -am -PskipTests"
+command! BuildServer execute "make! install -pl :epsilon-war -am -PskipTests"
+command! Tests execute "make install -Ptest"
+command! Test call RunCurrentTest()<CR>
+command! FuncTests execute "make install -pl :epsilon-func-tests -am"
+command! BuildCurrentModule call BuildCurrentModule()<CR>
+command! RunCurrentTest call RunCurrentTest()<CR>
+
+" Git
+command! Glog execute "!git log -p %"
+command! Gadd execute "!git add %"
+
+map <F1> :BuildServer<CR>
+map <F2> :BuildGwt<CR>
+map <F3> :BuildJs<CR>
+
+" Map builds
+nnoremap <silent><Leader>bg :BuildGwt<CR>
+nnoremap <silent><Leader>bj :BuildJs<CR>
+nnoremap <silent><Leader>bs :BuildServer<CR>
+nnoremap <silent><Leader>rs :Restart<CR>
+nnoremap <silent><Leader>rf :FuncTests<CR>
+nnoremap <silent><Leader>bc :BuildCurrentModule<CR>
+nnoremap <silent><Leader>rc :RunCurrentTest<CR>
