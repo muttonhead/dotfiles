@@ -3,7 +3,7 @@ export GWT_HOME=/opt/gwt/current
 export ANT_HOME=/opt/ant/current
 export DEPOT_TOOLS=/opt/depot_tools
 export M2_REPO=~/.m2/repository/
-export MAVEN_OPTS="-Xmx2048m -XX:MaxPermSize=256M"
+export MAVEN_OPTS="-Xmx2548m -XX:MaxPermSize=256M"
 export WEBDRIVER_CHROME_DRIVER=/opt/seleniumn/chromedriver
 
 # Set editor

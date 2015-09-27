@@ -21,5 +21,13 @@ alias very=git
 alias much='git add'
 alias wow='git status'
 
-# git
+# maven
+alias mcis="mvn clean install -PskipTests"
+alias mci="mvn clean install"
+alias mej="mvn exec:java"
+alias mi="mvn install"
+alias mis="mvn install -PskipTests"
 
+# java
+alias j7="sudo archlinux-java set java-7-jdk"
+alias j8="sudo archlinux-java set java-8-jdk"

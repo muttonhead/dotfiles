@@ -1,7 +1,7 @@
 " Make
 " Sets build variables for Apache maven
 fu! SetJava()
-	silent !sudo archlinux-java set java-7-jdk
+	silent !sudo archlinux-java set java-8-jdk
 endfu
 "}}}}
 fu! SetMaven()

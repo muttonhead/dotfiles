@@ -15,10 +15,8 @@ call vundle#begin()
 
 " Plugins
 Plugin 'gmarik/Vundle.vim'
-Plugin 'wincent/Command-T'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
-Plugin 'fholgado/minibufexpl.vim'
 Plugin 'vim-scripts/taglist.vim'
 Plugin 'marcus/autotag.vim'
 Plugin 'tpope/vim-fugitive'
@@ -30,11 +28,20 @@ Plugin 'muttonhead/vim-maven-utils'
 Plugin 'tpope/vim-surround'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'rking/ag.vim'
+Plugin 'SirVer/ultisnips.git'
+Plugin 'honza/vim-snippets.git'
+Plugin 'ervandew/supertab'
+Plugin 'kien/ctrlp.vim.git'
+filetype plugin indent on
 call vundle#end()
 
-" Command-T
-let g:CommandTMaxFiles = 100000
+" Ctrl-P
+" let g:ctrlp_map = '<Leader>t'
+nnoremap <C-b> :CtrlPBuffer<CR>
 set wildignore=*.swp,*.class,*.jar,*.png,*.jpeg,*.jpg,**/target/**
+let g:ctrlp_match_window = 'bottom,order:ttb,min:1,max:30,results:30'
+let g:ctrlp_max_files= 0
+let g:ctrlp_by_filename = 1
 
 " Nerd Tree
 nnoremap <silent> <C-N> :NERDTreeToggle<CR>
@@ -90,11 +97,6 @@ set so=15
 " map leader to ,
 :let mapleader = ","
 
-" read a .vim.local
-if filereadable( ".vim.local" ) 
-	so .vim.local
-endif
-
 " dont auto // comment 
 au FileType * setlocal comments-=:// comments+=f://
 
@@ -106,3 +108,13 @@ au FileType * setlocal comments-=:// comments+=f://
 
 " search for current word
 nnoremap <silent><Leader>a :Ag! <cword><cr>
+nnoremap <silent><Leader>j :Ag! <cword> --java<cr>
+
+" quickfix
+nnoremap <silent><Leader>n :cn<cr>
+
+" read a .vim.local
+if filereadable( ".vim.local" ) 
+	so .vim.local
+endif
+
