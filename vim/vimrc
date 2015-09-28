@@ -32,8 +32,9 @@ Plugin 'SirVer/ultisnips.git'
 Plugin 'honza/vim-snippets.git'
 Plugin 'ervandew/supertab'
 Plugin 'kien/ctrlp.vim.git'
-filetype plugin indent on
+Plugin 'd11wtq/ctrlp_bdelete.vim.git'
 call vundle#end()
+filetype plugin indent on
 
 " Ctrl-P
 " let g:ctrlp_map = '<Leader>t'
@@ -42,6 +43,7 @@ set wildignore=*.swp,*.class,*.jar,*.png,*.jpeg,*.jpg,**/target/**
 let g:ctrlp_match_window = 'bottom,order:ttb,min:1,max:30,results:30'
 let g:ctrlp_max_files= 0
 let g:ctrlp_by_filename = 1
+call ctrlp_bdelete#init()
 
 " Nerd Tree
 nnoremap <silent> <C-N> :NERDTreeToggle<CR>
@@ -118,3 +120,14 @@ if filereadable( ".vim.local" )
 	so .vim.local
 endif
 
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsSnippetsDir="~/.vim/bundle/vim-snippets/UltiSnips/"
