@@ -33,6 +33,7 @@ Plugin 'honza/vim-snippets.git'
 Plugin 'ervandew/supertab'
 Plugin 'kien/ctrlp.vim.git'
 Plugin 'd11wtq/ctrlp_bdelete.vim.git'
+Plugin 'mxw/vim-jsx'
 call vundle#end()
 filetype plugin indent on
 
@@ -114,6 +115,9 @@ nnoremap <silent><Leader>j :Ag! <cword> --java<cr>
 
 " quickfix
 nnoremap <silent><Leader>n :cn<cr>
+
+" Allow JSX in normal JS files
+let g:jsx_ext_required = 0
 
 " read a .vim.local
 if filereadable( ".vim.local" ) 
