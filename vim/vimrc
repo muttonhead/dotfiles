@@ -33,7 +33,7 @@ Plugin 'honza/vim-snippets.git'
 Plugin 'ervandew/supertab'
 Plugin 'kien/ctrlp.vim.git'
 Plugin 'd11wtq/ctrlp_bdelete.vim.git'
-Plugin 'mxw/vim-jsx'
+Plugin 'tfnico/vim-gradle'
 call vundle#end()
 filetype plugin indent on
 
