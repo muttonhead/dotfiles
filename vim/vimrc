@@ -135,3 +135,75 @@ let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetsDir="~/.vim/bundle/vim-snippets/UltiSnips/"
+
+" Building {{{
+fu! SetJava()
+	silent !sudo archlinux-java set java-8-jdk
+endfu
+"}}}}
+
+" Sets build variables for gradle
+fu! SetGradle()
+	set makeprg=gradle\ --daemon\ --quiet
+	set efm=
+				\%W%f:%l:\ warning:\ %m,
+				\%E%f:%l:\ error:\ %m,
+				\%C%p^,
+				\%C\ %#%m,
+				\%-G%.%#
+endfu
+
+" Sets build variables for Apache maven
+fu! SetMaven()
+	set makeprg=mvn\ -q\ -Djava.awt.headless=true\ -PskipTests
+	set efm=
+				\%W[WARNING]\ %f:[%l\\,%c]\ %m,
+				\%E[ERROR]\ %f:[%l\\,%c]\ %m,
+				\%C\ %#symbol:\ %.%#\ %m,
+				\%Z\ %#location:\ %.%#,
+				\%C[ERROR]\ symbol:\ %.%#\ %m,
+				\%Z[ERROR]\ location:\ %.%#,
+				\%C[ERROR]\ %#required:\ %#%m,
+				\%Z[ERROR]\ found:\ %#%m,
+				\%Z\ %#found:\ %#%m,
+				\%-Z%.%#,
+				\[ERROR]\ %f:[%l]\ %m,
+				\%-G%.%#,
+endfu
+
+" Build the closest project to the current file with maven or gradle
+:map <leader>b :call Build(0)<cr>
+:map <leader>clb :call Build(1)<cr>:call Build(0)<cr>
+function! Build(clean)
+	let l:dir = expand('%:p:h')
+	let l:pom = l:dir . "/pom.xml"
+	let l:gradle = l:dir . "/build.gradle"
+	let l:gradle_settings = l:dir . "/settings.gradle"
+	while ! filereadable(l:pom) && ! filereadable(l:gradle) && ! filereadable(l:gradle_settings)
+		let l:dir = fnamemodify(l:dir, ':h')
+		if 1 == strlen(l:dir)
+			echo "Could not find pom.xml, build.xml, build.gradle, or settings.gradle"
+			return
+		endif
+		let l:pom = l:dir . "/pom.xml"
+		let l:gradle = l:dir . "/build.gradle"
+		let l:gradle_settings = l:dir . "/settings.gradle"
+	endwhile
+
+	if filereadable(l:pom)
+		call SetMaven()
+		let l:args = "-f " . l:pom 
+	elseif filereadable(l:gradle_settings)
+		call SetGradle();
+		let l:args = "-b " . l:gradle_settings 
+	elseif filereadable(l:gradle)
+		call SetGradle();
+		let l:args = "-b " . l:gradle 
+	endif
+
+	if a:clean
+		let l:args = l:args . " clean"
+	endif
+	exe "make " . l:args . " install"
+endfunction
+"}}}
