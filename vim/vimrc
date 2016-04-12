@@ -34,13 +34,15 @@ Plugin 'ervandew/supertab'
 Plugin 'kien/ctrlp.vim.git'
 Plugin 'd11wtq/ctrlp_bdelete.vim.git'
 Plugin 'tfnico/vim-gradle'
+Plugin 'elixir-lang/vim-elixir'
+Plugin 'leafgarland/typescript-vim.git'
 call vundle#end()
 filetype plugin indent on
 
 " Ctrl-P
 " let g:ctrlp_map = '<Leader>t'
 nnoremap <C-b> :CtrlPBuffer<CR>
-set wildignore=*.swp,*.class,*.jar,*.png,*.jpeg,*.jpg,**/target/**
+set wildignore=*.swp,*.class,*.jar,*.png,*.jpeg,*.jpg,**/target/**,**/node_modules/**,**/typings/**
 let g:ctrlp_match_window = 'bottom,order:ttb,min:1,max:30,results:30'
 let g:ctrlp_max_files= 0
 let g:ctrlp_by_filename = 1
@@ -72,6 +74,8 @@ colorscheme solarized
 " YouCompleteMe
 inoremap <expr> <C-j> ("\<C-n>")
 inoremap <expr> <C-k> ("\<C-p>")
+let g:loaded_sql_completion = 0
+let g:omni_sql_no_default_maps = 1
 
 " ag
 ca Ag Ag!
@@ -171,6 +175,13 @@ fu! SetMaven()
 				\%-G%.%#,
 endfu
 
+" Sets build variables for gulp builds
+fu! SetGulp()
+	set makeprg=gulp
+ 	set efm=
+				\%+A\ %#%f\ %#(%l\\\,%c):\ %m,%C%m
+endfu
+
 " Build the closest project to the current file with maven or gradle
 :map <leader>b :call Build(0)<cr>
 :map <leader>clb :call Build(1)<cr>:call Build(0)<cr>
@@ -178,32 +189,37 @@ function! Build(clean)
 	let l:dir = expand('%:p:h')
 	let l:pom = l:dir . "/pom.xml"
 	let l:gradle = l:dir . "/build.gradle"
+	let l:gulp = l:dir . "/gulpfile.js"
 	let l:gradle_settings = l:dir . "/settings.gradle"
-	while ! filereadable(l:pom) && ! filereadable(l:gradle) && ! filereadable(l:gradle_settings)
+	while ! filereadable(l:pom) && ! filereadable(l:gradle) && ! filereadable(l:gradle_settings) && ! filereadable(l:gulp)
 		let l:dir = fnamemodify(l:dir, ':h')
 		if 1 == strlen(l:dir)
-			echo "Could not find pom.xml, build.xml, build.gradle, or settings.gradle"
+			echo "Could not find pom.xml, build.xml, build.gradle, settings.gradle, or gulpfile.js"
 			return
 		endif
 		let l:pom = l:dir . "/pom.xml"
 		let l:gradle = l:dir . "/build.gradle"
 		let l:gradle_settings = l:dir . "/settings.gradle"
+		let l:gulp = l:dir . "gulpfile.js"
 	endwhile
 
-	if filereadable(l:pom)
+	if filereadable(l:gulp)
+		call SetGulp();
+		let l:args = "-b " . l:gulp . " ts"
+	elseif filereadable(l:pom)
 		call SetMaven()
-		let l:args = "-f " . l:pom 
+		let l:args = "-f " . l:pom  . " install"
 	elseif filereadable(l:gradle_settings)
 		call SetGradle();
-		let l:args = "-b " . l:gradle_settings 
+		let l:args = "-b " . l:gradle_settings . " install"
 	elseif filereadable(l:gradle)
 		call SetGradle();
-		let l:args = "-b " . l:gradle 
+		let l:args = "-b " . l:gradle . " install" 
 	endif
 
 	if a:clean
 		let l:args = l:args . " clean"
 	endif
-	exe "make " . l:args . " install"
+	exe "make " . l:args
 endfunction
 "}}}
