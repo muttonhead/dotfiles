@@ -36,13 +36,15 @@ Plugin 'd11wtq/ctrlp_bdelete.vim.git'
 Plugin 'tfnico/vim-gradle'
 Plugin 'elixir-lang/vim-elixir'
 Plugin 'leafgarland/typescript-vim.git'
+Plugin 'stephpy/vim-yaml'
+Plugin 'lrampa/vim-apib.git'
 call vundle#end()
 filetype plugin indent on
 
 " Ctrl-P
 " let g:ctrlp_map = '<Leader>t'
 nnoremap <C-b> :CtrlPBuffer<CR>
-set wildignore=*.swp,*.class,*.jar,*.png,*.jpeg,*.jpg,**/target/**,**/node_modules/**,**/typings/**
+set wildignore=*.swp,*.class,*.jar,*.png,*.jpeg,*.jpg,**/target/**,**/node_modules/**,**/typings/**,*.map
 let g:ctrlp_match_window = 'bottom,order:ttb,min:1,max:30,results:30'
 let g:ctrlp_max_files= 0
 let g:ctrlp_by_filename = 1
@@ -116,17 +118,13 @@ au FileType * setlocal comments-=:// comments+=f://
 " search for current word
 nnoremap <silent><Leader>a :Ag! <cword><cr>
 nnoremap <silent><Leader>j :Ag! <cword> --java<cr>
+nnoremap <silent><Leader>t :Ag! <cword> --ts<cr>
 
 " quickfix
 nnoremap <silent><Leader>n :cn<cr>
 
 " Allow JSX in normal JS files
 let g:jsx_ext_required = 0
-
-" read a .vim.local
-if filereadable( ".vim.local" ) 
-	so .vim.local
-endif
 
 " make YCM compatible with UltiSnips (using supertab)
 let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
@@ -159,7 +157,7 @@ endfu
 
 " Sets build variables for Apache maven
 fu! SetMaven()
-	set makeprg=mvn\ -q\ -Djava.awt.headless=true\ -PskipTests
+	set makeprg=mvn\ -Djava.awt.headless=true\ -PskipTests
 	set efm=
 				\%W[WARNING]\ %f:[%l\\,%c]\ %m,
 				\%E[ERROR]\ %f:[%l\\,%c]\ %m,
@@ -185,6 +183,7 @@ endfu
 " Build the closest project to the current file with maven or gradle
 :map <leader>b :call Build(0)<cr>
 :map <leader>clb :call Build(1)<cr>:call Build(0)<cr>
+:map <leader>r :call Run()<cr>
 function! Build(clean)
 	let l:dir = expand('%:p:h')
 	let l:pom = l:dir . "/pom.xml"
@@ -222,4 +221,40 @@ function! Build(clean)
 	endif
 	exe "make " . l:args
 endfunction
-"}}}
+
+function! Run()
+	let l:dir = expand('%:p:h')
+	let l:pom = l:dir . "/pom.xml"
+	let l:gradle = l:dir . "/build.gradle"
+	let l:gulp = l:dir . "/gulpfile.js"
+	let l:gradle_settings = l:dir . "/settings.gradle"
+	while ! filereadable(l:pom) && ! filereadable(l:gradle) && ! filereadable(l:gradle_settings) && ! filereadable(l:gulp)
+		let l:dir = fnamemodify(l:dir, ':h')
+		if 1 == strlen(l:dir)
+			echo "Could not find pom.xml, build.xml, build.gradle, settings.gradle, or gulpfile.js"
+			return
+		endif
+		let l:pom = l:dir . "/pom.xml"
+		let l:gradle = l:dir . "/build.gradle"
+		let l:gradle_settings = l:dir . "/settings.gradle"
+		let l:gulp = l:dir . "gulpfile.js"
+	endwhile
+
+	if filereadable(l:pom)
+		call SetMaven()
+		let l:args = "-f " . l:pom  . " exec:java"
+	endif
+
+	if a:clean
+		let l:args = l:args . " clean"
+	endif
+	exe "make " . l:args
+endfunction
+
+" read a .vim.local
+if filereadable( "../.vim.local" ) 
+	so ../.vim.local
+endif
+if filereadable( ".vim.local" ) 
+	so .vim.local
+endif
