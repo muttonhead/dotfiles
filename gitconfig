@@ -25,3 +25,6 @@
 	rb = rebase
 	fo = fetch origin
 	f = fetch
+	rbc = rebase --continue
+	rba = rebase --abort
+	pom = push origin master
