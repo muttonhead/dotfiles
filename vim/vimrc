@@ -117,7 +117,7 @@ au FileType * setlocal comments-=:// comments+=f://
 
 " search for current word
 nnoremap <silent><Leader>a :Ag! <cword><cr>
-nnoremap <silent><Leader>j :Ag! <cword> --java<cr>
+nnoremap <silent><Leader>j :Ag! <cword> --js<cr>
 nnoremap <silent><Leader>t :Ag! <cword> --ts<cr>
 
 " quickfix
@@ -138,116 +138,35 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetsDir="~/.vim/bundle/vim-snippets/UltiSnips/"
 
-" Building {{{
-fu! SetJava()
-	silent !sudo archlinux-java set java-8-jdk
-endfu
-"}}}}
-
 " Sets build variables for gradle
-fu! SetGradle()
-	set makeprg=gradle\ --daemon\ --quiet
-	set efm=
-				\%W%f:%l:\ warning:\ %m,
-				\%E%f:%l:\ error:\ %m,
-				\%C%p^,
-				\%C\ %#%m,
-				\%-G%.%#
-endfu
-
-" Sets build variables for Apache maven
-fu! SetMaven()
-	set makeprg=mvn\ -Djava.awt.headless=true\ -PskipTests
-	set efm=
-				\%W[WARNING]\ %f:[%l\\,%c]\ %m,
-				\%E[ERROR]\ %f:[%l\\,%c]\ %m,
-				\%C\ %#symbol:\ %.%#\ %m,
-				\%Z\ %#location:\ %.%#,
-				\%C[ERROR]\ symbol:\ %.%#\ %m,
-				\%Z[ERROR]\ location:\ %.%#,
-				\%C[ERROR]\ %#required:\ %#%m,
-				\%Z[ERROR]\ found:\ %#%m,
-				\%Z\ %#found:\ %#%m,
-				\%-Z%.%#,
-				\[ERROR]\ %f:[%l]\ %m,
-				\%-G%.%#,
-endfu
-
-" Sets build variables for gulp builds
-fu! SetGulp()
-	set makeprg=gulp
- 	set efm=
-				\%+A\ %#%f\ %#(%l\\\,%c):\ %m,%C%m
+fu! SetTsc()
+	set makeprg=tsc
+	set efm=%+A\ %#%f\ %#(%l\\\,%c):\ %m,%C%m
 endfu
 
 " Build the closest project to the current file with maven or gradle
-:map <leader>b :call Build(0)<cr>
-:map <leader>clb :call Build(1)<cr>:call Build(0)<cr>
-:map <leader>r :call Run()<cr>
-function! Build(clean)
+:map <leader>b :call Build()<cr>
+function! Build()
 	let l:dir = expand('%:p:h')
-	let l:pom = l:dir . "/pom.xml"
-	let l:gradle = l:dir . "/build.gradle"
-	let l:gulp = l:dir . "/gulpfile.js"
-	let l:gradle_settings = l:dir . "/settings.gradle"
-	while ! filereadable(l:pom) && ! filereadable(l:gradle) && ! filereadable(l:gradle_settings) && ! filereadable(l:gulp)
+	echom l:dir
+	let l:tsconfig = l:dir . "/tsconfig.json"
+	echom l:tsconfig
+	while ! filereadable(l:tsconfig)
 		let l:dir = fnamemodify(l:dir, ':h')
+		echom l:dir
 		if 1 == strlen(l:dir)
-			echo "Could not find pom.xml, build.xml, build.gradle, settings.gradle, or gulpfile.js"
+			echo "Could not find tsconfig"
 			return
 		endif
-		let l:pom = l:dir . "/pom.xml"
-		let l:gradle = l:dir . "/build.gradle"
-		let l:gradle_settings = l:dir . "/settings.gradle"
-		let l:gulp = l:dir . "gulpfile.js"
+		let l:tsconfig = l:dir . "/tsconfig.json"
+		echom l:tsconfig
 	endwhile
 
-	if filereadable(l:gulp)
-		call SetGulp();
-		let l:args = "-b " . l:gulp . " ts"
-	elseif filereadable(l:pom)
-		call SetMaven()
-		let l:args = "-f " . l:pom  . " install"
-	elseif filereadable(l:gradle_settings)
-		call SetGradle();
-		let l:args = "-b " . l:gradle_settings . " install"
-	elseif filereadable(l:gradle)
-		call SetGradle();
-		let l:args = "-b " . l:gradle . " install" 
+	if filereadable(l:tsconfig)
+		call SetTsc()
+		let l:args = "-p " . l:dir
 	endif
 
-	if a:clean
-		let l:args = l:args . " clean"
-	endif
-	exe "make " . l:args
-endfunction
-
-function! Run()
-	let l:dir = expand('%:p:h')
-	let l:pom = l:dir . "/pom.xml"
-	let l:gradle = l:dir . "/build.gradle"
-	let l:gulp = l:dir . "/gulpfile.js"
-	let l:gradle_settings = l:dir . "/settings.gradle"
-	while ! filereadable(l:pom) && ! filereadable(l:gradle) && ! filereadable(l:gradle_settings) && ! filereadable(l:gulp)
-		let l:dir = fnamemodify(l:dir, ':h')
-		if 1 == strlen(l:dir)
-			echo "Could not find pom.xml, build.xml, build.gradle, settings.gradle, or gulpfile.js"
-			return
-		endif
-		let l:pom = l:dir . "/pom.xml"
-		let l:gradle = l:dir . "/build.gradle"
-		let l:gradle_settings = l:dir . "/settings.gradle"
-		let l:gulp = l:dir . "gulpfile.js"
-	endwhile
-
-	if filereadable(l:pom)
-		call SetMaven()
-		let l:args = "-f " . l:pom  . " exec:java"
-	endif
-
-	if a:clean
-		let l:args = l:args . " clean"
-	endif
 	exe "make " . l:args
 endfunction
 
