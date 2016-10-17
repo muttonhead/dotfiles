@@ -49,6 +49,7 @@ let g:ctrlp_match_window = 'bottom,order:ttb,min:1,max:30,results:30'
 let g:ctrlp_max_files= 0
 let g:ctrlp_by_filename = 1
 call ctrlp_bdelete#init()
+let g:ctrlp_open_multiple_files = 'ij'
 
 " Nerd Tree
 nnoremap <silent> <C-N> :NERDTreeToggle<CR>
