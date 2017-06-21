@@ -97,3 +97,6 @@ source $ZSH/oh-my-zsh.sh
 export NPM_TOKEN=b0c8a150-b853-479c-96d6-78f42a37cb07
 export DEFAULT_USER=corey
 source /usr/share/nvm/init-nvm.sh
+
+unalias gr
+. <(gr completion)

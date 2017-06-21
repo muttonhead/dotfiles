@@ -37,13 +37,14 @@ Plugin 'elixir-lang/vim-elixir'
 Plugin 'leafgarland/typescript-vim.git'
 Plugin 'stephpy/vim-yaml'
 Plugin 'lrampa/vim-apib.git'
+Plugin 'w0rp/ale'
+Plugin 'vim-scripts/groovyindent-unix'
 call vundle#end()
 filetype plugin indent on
 
 " Ctrl-P
 " let g:ctrlp_map = '<Leader>t'
 nnoremap <C-b> :CtrlPBuffer<CR>
-set wildignore=*.swp,*.class,*.jar,*.png,*.jpeg,*.jpg,**/target/**,**/node_modules/**,**/typings/**,*.map
 let g:ctrlp_match_window = 'bottom,order:ttb,min:1,max:30,results:30'
 let g:ctrlp_max_files= 0
 let g:ctrlp_by_filename = 1
@@ -81,9 +82,6 @@ let g:omni_sql_no_default_maps = 1
 
 " ag
 ca Ag Ag!
-
-" post vundle thing
-filetype plugin indent on
 
 " tab setup
 :set tabstop=4
@@ -138,6 +136,9 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetsDir="~/.vim/bundle/vim-snippets/UltiSnips/"
 
+" 2 spaces for .json files for package.json
+autocmd FileType json setlocal shiftwidth=2 tabstop=2 expandtab
+
 " Sets build variables for gradle
 fu! SetTsc()
 	set makeprg=tsc
@@ -177,3 +178,6 @@ endif
 if filereadable( ".vim.local" ) 
 	so .vim.local
 endif
+
+set wildignore=*.swp,*.class,*.jar,*.png,*.jpeg,*.jpg,**/target/**,**/node_modules/**,**/typings/**,**/src/**/*.js,*.map,**/coverage/**,**/generated/**/*.d.ts,**/generated/**/*.js,**/src/**/*.d.ts,**/tests/**/*.js,**/tests/**/*.d.ts,**/src/*.js,**/src/*.d.ts,build/**,**/*.tgz
+let NERDTreeRespectWildIgnore=1
