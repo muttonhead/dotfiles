@@ -39,6 +39,7 @@ Plugin 'stephpy/vim-yaml'
 Plugin 'lrampa/vim-apib.git'
 Plugin 'w0rp/ale'
 Plugin 'vim-scripts/groovyindent-unix'
+Plugin 'jceb/vim-orgmode'
 call vundle#end()
 filetype plugin indent on
 
@@ -138,38 +139,6 @@ let g:UltiSnipsSnippetsDir="~/.vim/bundle/vim-snippets/UltiSnips/"
 
 " 2 spaces for .json files for package.json
 autocmd FileType json setlocal shiftwidth=2 tabstop=2 expandtab
-
-" Sets build variables for gradle
-fu! SetTsc()
-	set makeprg=tsc
-	set efm=%+A\ %#%f\ %#(%l\\\,%c):\ %m,%C%m
-endfu
-
-" Build the closest project to the current file with maven or gradle
-:map <leader>b :call Build()<cr>
-function! Build()
-	let l:dir = expand('%:p:h')
-	echom l:dir
-	let l:tsconfig = l:dir . "/tsconfig.json"
-	echom l:tsconfig
-	while ! filereadable(l:tsconfig)
-		let l:dir = fnamemodify(l:dir, ':h')
-		echom l:dir
-		if 1 == strlen(l:dir)
-			echo "Could not find tsconfig"
-			return
-		endif
-		let l:tsconfig = l:dir . "/tsconfig.json"
-		echom l:tsconfig
-	endwhile
-
-	if filereadable(l:tsconfig)
-		call SetTsc()
-		let l:args = "-p " . l:dir
-	endif
-
-	exe "make " . l:args
-endfunction
 
 " read a .vim.local
 if filereadable( "../.vim.local" ) 
