@@ -21,7 +21,7 @@ Plugin 'vim-scripts/taglist.vim'
 Plugin 'marcus/autotag.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
-Plugin 'ivalkeen/vim-simpledb'
+Plugin 'rlgomes/vim-simpledb'
 Plugin 'maciakl/vim-neatstatus'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'tpope/vim-surround'
@@ -32,14 +32,11 @@ Plugin 'honza/vim-snippets.git'
 Plugin 'ervandew/supertab'
 Plugin 'kien/ctrlp.vim.git'
 Plugin 'd11wtq/ctrlp_bdelete.vim.git'
-Plugin 'tfnico/vim-gradle'
-Plugin 'elixir-lang/vim-elixir'
 Plugin 'leafgarland/typescript-vim.git'
 Plugin 'stephpy/vim-yaml'
-Plugin 'lrampa/vim-apib.git'
 Plugin 'w0rp/ale'
-Plugin 'vim-scripts/groovyindent-unix'
 Plugin 'jceb/vim-orgmode'
+Plugin 'rhysd/committia.vim'
 call vundle#end()
 filetype plugin indent on
 
@@ -79,7 +76,7 @@ colorscheme solarized
 inoremap <expr> <C-j> ("\<C-n>")
 inoremap <expr> <C-k> ("\<C-p>")
 let g:loaded_sql_completion = 0
-let g:omni_sql_no_default_maps = 1
+let g:omni_sql_no_default_maps = 0
 
 " ag
 ca Ag Ag!
