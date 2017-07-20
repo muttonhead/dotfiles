@@ -1,17 +1,6 @@
 # Default to vim
 alias vi=vim
 
-# Move to projects
-alias ep="cd ~/workspace/epsilon"
-alias tt="cd ~/workspace/thinktank"
-alias nuvos="cd ~/workspace/nuvos"
-
-# Search files
-alias sj="ack --java $1"
-alias ss="ack --sql $1"
-alias sjs="ack --js $1"
-alias sx="ack --xml $1"
-
 # Colorized outputs
 alias ls="ls -al --color=auto"
 
