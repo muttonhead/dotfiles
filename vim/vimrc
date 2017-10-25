@@ -2,6 +2,7 @@
 set nocompatible
 filetype off
 set noswapfile
+set clipboard=unnamedplus
 
 " Unicode
 set encoding=utf8
@@ -37,6 +38,11 @@ Plugin 'stephpy/vim-yaml'
 Plugin 'w0rp/ale'
 Plugin 'jceb/vim-orgmode'
 Plugin 'rhysd/committia.vim'
+Plugin 'ElmCast/elm-vim'
+Plugin 'tomlion/vim-solidity'
+Plugin 'tpope/vim-speeddating'
+Plugin 'dart-lang/dart-vim-plugin.git'
+Plugin 'mxw/vim-jsx'
 call vundle#end()
 filetype plugin indent on
 
@@ -44,10 +50,11 @@ filetype plugin indent on
 " let g:ctrlp_map = '<Leader>t'
 nnoremap <C-b> :CtrlPBuffer<CR>
 let g:ctrlp_match_window = 'bottom,order:ttb,min:1,max:30,results:30'
-let g:ctrlp_max_files= 0
+let g:ctrlp_max_files = 0
 let g:ctrlp_by_filename = 1
 call ctrlp_bdelete#init()
 let g:ctrlp_open_multiple_files = 'ij'
+let g:ctrlp_use_caching = 0
 
 " Nerd Tree
 nnoremap <silent> <C-N> :NERDTreeToggle<CR>
@@ -77,6 +84,7 @@ inoremap <expr> <C-j> ("\<C-n>")
 inoremap <expr> <C-k> ("\<C-p>")
 let g:loaded_sql_completion = 0
 let g:omni_sql_no_default_maps = 0
+let g:ycm_semantic_triggers ={ 'elm' : ['.'] }
 
 " ag
 ca Ag Ag!
@@ -101,6 +109,7 @@ set so=15
 
 " map leader to ,
 :let mapleader = ","
+:let maplocalleader = ","
 
 " dont auto // comment 
 au FileType * setlocal comments-=:// comments+=f://
@@ -137,6 +146,9 @@ let g:UltiSnipsSnippetsDir="~/.vim/bundle/vim-snippets/UltiSnips/"
 " 2 spaces for .json files for package.json
 autocmd FileType json setlocal shiftwidth=2 tabstop=2 expandtab
 
+" Don't require JSX extension
+let g:jsx_ext_required = 0
+
 " read a .vim.local
 if filereadable( "../.vim.local" ) 
 	so ../.vim.local
@@ -145,5 +157,5 @@ if filereadable( ".vim.local" )
 	so .vim.local
 endif
 
-set wildignore=*.swp,*.class,*.jar,*.png,*.jpeg,*.jpg,**/target/**,**/node_modules/**,**/typings/**,**/src/**/*.js,*.map,**/coverage/**,**/generated/**/*.d.ts,**/generated/**/*.js,**/src/**/*.d.ts,**/tests/**/*.js,**/tests/**/*.d.ts,**/src/*.js,**/src/*.d.ts,build/**,**/*.tgz
+set wildignore=*.swp,*.class,*.jar,*.png,*.jpeg,*.jpg,**/target/**,**/node_modules/**,*.map,**/coverage/**,**/generated/**/*.d.ts,**/generated/**/*.js,**/src/**/*.d.ts,**/tests/**/*.d.ts,**/src/*.d.ts,build/**,**/*.tgz
 let NERDTreeRespectWildIgnore=1

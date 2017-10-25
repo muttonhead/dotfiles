@@ -100,3 +100,10 @@ source /usr/share/nvm/init-nvm.sh
 
 unalias gr
 . <(gr completion)
+
+# tabtab source for serverless package
+# uninstall by removing these lines or running `tabtab uninstall serverless`
+[[ -f /home/corey/personal/cocktails/node_modules/tabtab/.completions/serverless.zsh ]] && . /home/corey/personal/cocktails/node_modules/tabtab/.completions/serverless.zsh
+# tabtab source for sls package
+# uninstall by removing these lines or running `tabtab uninstall sls`
+[[ -f /home/corey/personal/cocktails/node_modules/tabtab/.completions/sls.zsh ]] && . /home/corey/personal/cocktails/node_modules/tabtab/.completions/sls.zsh
