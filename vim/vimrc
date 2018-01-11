@@ -43,6 +43,8 @@ Plugin 'tomlion/vim-solidity'
 Plugin 'tpope/vim-speeddating'
 Plugin 'dart-lang/dart-vim-plugin.git'
 Plugin 'mxw/vim-jsx'
+Plugin 'udalov/kotlin-vim'
+Plugin 'mhinz/vim-startify'
 call vundle#end()
 filetype plugin indent on
 
@@ -157,5 +159,5 @@ if filereadable( ".vim.local" )
 	so .vim.local
 endif
 
-set wildignore=*.swp,*.class,*.jar,*.png,*.jpeg,*.jpg,**/target/**,**/node_modules/**,*.map,**/coverage/**,**/generated/**/*.d.ts,**/generated/**/*.js,**/src/**/*.d.ts,**/tests/**/*.d.ts,**/src/*.d.ts,build/**,**/*.tgz
+set wildignore=*.swp,*.class,*.jar,*.png,*.jpeg,*.jpg,**/node_modules/**,*.map,**/coverage/**,**/generated/**/*.d.ts,**/generated/**/*.js,**/src/**/*.d.ts,**/tests/**/*.d.ts,**/src/*.d.ts,build/**,**/*.tgz
 let NERDTreeRespectWildIgnore=1

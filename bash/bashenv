@@ -8,4 +8,6 @@ export EDITOR=vim
 # Pager
 export PAGER=less
 
-export PATH=~/.npm-global/bin:$PATH
+export VS_BASE_DIR=$HOME/neverfail/deploy
+
+export PATH=~/.npm-global/bin:$PATH:$VS_BASE_DIR/bin

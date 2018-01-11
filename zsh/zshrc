@@ -49,13 +49,21 @@ DISABLE_AUTO_UPDATE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(aws docker docker-compose git gulp mvn node npm redis-cli)
+plugins=(aws docker docker-compose git gulp mvn node npm redis-cli kubectl)
 
 # User configuration
 
 export PATH=$HOME/bin:/usr/local/bin:$PATH
-# export MANPATH="/usr/local/man:$MANPATH"
 
+# Set environment variables
+if [ -f ~/dotfiles/bash/aliasrc ]; then
+	source ~/dotfiles/bash/bashenv
+fi
+
+# Set dircolors
+if [ -f ~/dotfiles/zsh/dircolors.ansi-dark ]; then
+	eval `dircolors ~/dotfiles/zsh/dircolors.ansi-dark`
+fi
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8

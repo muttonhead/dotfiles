@@ -161,3 +161,9 @@ for_window [class="chromium"] border none
 for_window [class="Google-chrome"] border none
 for_window [class="Skype"] border none
 for_window [class="Firefox"] border none
+
+# autostart
+exec insync start
+
+exec slack
+assign [class="Slack"] 1
