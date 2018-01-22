@@ -61,7 +61,7 @@ let g:ctrlp_use_caching = 0
 " Nerd Tree
 nnoremap <silent> <C-N> :NERDTreeToggle<CR>
 let g:NERDTreeDirArrows=0
-let g:NERDTreeWinSize=50
+let g:NERDTreeWinSize=35
 
 " minibufexpl
 let g:miniBufExplMapWindowNavVim = 1
