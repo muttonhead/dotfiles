@@ -81,9 +81,9 @@ Urxvt.borderLess: true
 Urxvt.internalBorder: 0
 Urxvt.externalBorder: 0
 
-*font: xft:SourceCodePro-Light:pixelsize=12
-*boldFont: xft:SourceCodePro-Light:bold:pixelsize=12
+*font: xft:SourceCodePro-Light:pixelsize=11
+*boldFont: xft:SourceCodePro-Light:bold:pixelsize=11
 
-# Urxvt Transparency
+!! Urxvt Transparency
 URxvt.transparent: false
 URxvt.shading: 20

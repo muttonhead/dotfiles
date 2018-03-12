@@ -156,8 +156,6 @@ bar {
 }
 
 # decoration-less windows
-for_window [class="Chromium"] border none
-for_window [class="chromium"] border none
 for_window [class="Google-chrome"] border none
 for_window [class="Skype"] border none
 for_window [class="Firefox"] border none

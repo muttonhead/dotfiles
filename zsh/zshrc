@@ -49,7 +49,7 @@ DISABLE_AUTO_UPDATE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(aws docker docker-compose git gulp mvn node npm redis-cli kubectl)
+plugins=(aws docker docker-compose git gulp mvn node npm redis-cli kubectl helm)
 
 # User configuration
 
@@ -109,9 +109,26 @@ source /usr/share/nvm/init-nvm.sh
 unalias gr
 . <(gr completion)
 
+bindkey -v
+
+###-begin-services-completion-###
+if type compdef &>/dev/null; then
+  _services_completion () {
+    local reply
+    local si=$IFS
+
+    IFS=$'\n' reply=($(COMP_CWORD="$((CURRENT-1))" COMP_LINE="$BUFFER" COMP_POINT="$CURSOR" services completion -- "${words[@]}"))
+    IFS=$si
+
+    _describe 'values' reply
+  }
+  compdef _services_completion services
+fi
+###-end-services-completion-###
+
 # tabtab source for serverless package
 # uninstall by removing these lines or running `tabtab uninstall serverless`
-[[ -f /home/corey/personal/cocktails/node_modules/tabtab/.completions/serverless.zsh ]] && . /home/corey/personal/cocktails/node_modules/tabtab/.completions/serverless.zsh
+[[ -f /home/corey/cswoods/inventory/services/node_modules/tabtab/.completions/serverless.zsh ]] && . /home/corey/cswoods/inventory/services/node_modules/tabtab/.completions/serverless.zsh
 # tabtab source for sls package
 # uninstall by removing these lines or running `tabtab uninstall sls`
-[[ -f /home/corey/personal/cocktails/node_modules/tabtab/.completions/sls.zsh ]] && . /home/corey/personal/cocktails/node_modules/tabtab/.completions/sls.zsh
+[[ -f /home/corey/cswoods/inventory/services/node_modules/tabtab/.completions/sls.zsh ]] && . /home/corey/cswoods/inventory/services/node_modules/tabtab/.completions/sls.zsh

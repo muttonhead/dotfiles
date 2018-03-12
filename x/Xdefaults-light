@@ -82,6 +82,6 @@ Urxvt.externalBorder: 0
 *font: xft:SourceCodePro-Light:pixelsize=10
 *boldFont: xft:SourceCodePro-Light:bold:pixelsize=10
 
-# Urxvt Transparency
+!! Urxvt Transparency
 URxvt.transparent: false
 URxvt.shading: 20

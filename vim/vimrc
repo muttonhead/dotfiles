@@ -1,4 +1,5 @@
 " Be iMproved dammit
+let &t_ut=''
 set nocompatible
 filetype off
 set noswapfile
@@ -45,6 +46,8 @@ Plugin 'dart-lang/dart-vim-plugin.git'
 Plugin 'mxw/vim-jsx'
 Plugin 'udalov/kotlin-vim'
 Plugin 'mhinz/vim-startify'
+Plugin 'chrisbra/csv.vim'
+Plugin 'thenewvu/vim-colors-sketching'
 call vundle#end()
 filetype plugin indent on
 
@@ -78,7 +81,7 @@ let Tlist_WinWidth = 60
 
 " solarized colors
 syntax enable
-:set background=dark
+set background=dark
 colorscheme solarized
 
 " YouCompleteMe
