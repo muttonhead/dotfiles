@@ -5,51 +5,42 @@ filetype off
 set noswapfile
 set clipboard=unnamedplus
 
+nnoremap <silent> H :bprev<CR>
+nnoremap <silent> L :bnext<CR>
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
 " Unicode
 set encoding=utf8
 
-" tags
-:set tags=./tags
-
-" Vundle
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
 " Plugins
-Plugin 'gmarik/Vundle.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'vim-scripts/taglist.vim'
-Plugin 'marcus/autotag.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'rlgomes/vim-simpledb'
-Plugin 'maciakl/vim-neatstatus'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'tpope/vim-surround'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'rking/ag.vim'
-Plugin 'SirVer/ultisnips.git'
-Plugin 'honza/vim-snippets.git'
-Plugin 'ervandew/supertab'
-Plugin 'kien/ctrlp.vim.git'
-Plugin 'd11wtq/ctrlp_bdelete.vim.git'
-Plugin 'leafgarland/typescript-vim.git'
-Plugin 'stephpy/vim-yaml'
-Plugin 'w0rp/ale'
-Plugin 'jceb/vim-orgmode'
-Plugin 'rhysd/committia.vim'
-Plugin 'ElmCast/elm-vim'
-Plugin 'tomlion/vim-solidity'
-Plugin 'tpope/vim-speeddating'
-Plugin 'dart-lang/dart-vim-plugin.git'
-Plugin 'mxw/vim-jsx'
-Plugin 'udalov/kotlin-vim'
-Plugin 'mhinz/vim-startify'
-Plugin 'chrisbra/csv.vim'
-Plugin 'thenewvu/vim-colors-sketching'
-call vundle#end()
+call plug#begin('~/.vim/plugged')
+Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'rlgomes/vim-simpledb'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'Valloric/YouCompleteMe'
+Plug 'altercation/vim-colors-solarized'
+Plug 'rking/ag.vim'
+Plug 'kien/ctrlp.vim'
+Plug 'd11wtq/ctrlp_bdelete.vim'
+Plug 'leafgarland/typescript-vim'
+Plug 'stephpy/vim-yaml'
+Plug 'w0rp/ale'
+Plug 'rhysd/committia.vim'
+Plug 'tpope/vim-speeddating'
+Plug 'mxw/vim-jsx'
+Plug 'mhinz/vim-startify'
+Plug 'vimwiki/vimwiki'
+Plug 'diepm/vim-rest-console'
+call plug#end()
 filetype plugin indent on
+
+let g_airline_theme='solarized'
 
 " Ctrl-P
 " let g:ctrlp_map = '<Leader>t'
@@ -66,19 +57,6 @@ nnoremap <silent> <C-N> :NERDTreeToggle<CR>
 let g:NERDTreeDirArrows=0
 let g:NERDTreeWinSize=35
 
-" minibufexpl
-let g:miniBufExplMapWindowNavVim = 1
-nnoremap <silent> H :bprev<CR>
-nnoremap <silent> L :bnext<CR>
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-
-" taglist
-nnoremap <silent> <C-O> :TlistToggle<CR>
-let Tlist_WinWidth = 60
-
 " solarized colors
 syntax enable
 set background=dark
@@ -90,6 +68,7 @@ inoremap <expr> <C-k> ("\<C-p>")
 let g:loaded_sql_completion = 0
 let g:omni_sql_no_default_maps = 0
 let g:ycm_semantic_triggers ={ 'elm' : ['.'] }
+:set completeopt-=preview
 
 " ag
 ca Ag Ag!
@@ -119,16 +98,11 @@ set so=15
 " dont auto // comment 
 au FileType * setlocal comments-=:// comments+=f://
 
-" make K bring up javadoc
-:map <silent> K :help <c-r><c-w> <bar> only <CR>
-
 " map space to write
 :map <space> :w<CR>
 
 " search for current word
 nnoremap <silent><Leader>a :Ag! <cword><cr>
-nnoremap <silent><Leader>j :Ag! <cword> --js<cr>
-nnoremap <silent><Leader>t :Ag! <cword> --ts<cr>
 
 " quickfix
 nnoremap <silent><Leader>n :cn<cr>
@@ -136,31 +110,14 @@ nnoremap <silent><Leader>n :cn<cr>
 " Allow JSX in normal JS files
 let g:jsx_ext_required = 0
 
-" make YCM compatible with UltiSnips (using supertab)
-let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-n>'
-
-" better key bindings for UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-let g:UltiSnipsEditSplit="vertical"
-let g:UltiSnipsSnippetsDir="~/.vim/bundle/vim-snippets/UltiSnips/"
-
 " 2 spaces for .json files for package.json
 autocmd FileType json setlocal shiftwidth=2 tabstop=2 expandtab
 
-" Don't require JSX extension
-let g:jsx_ext_required = 0
+" vimwiki
+let g:vimwiki_list = [{'path': '~/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]
 
-" read a .vim.local
-if filereadable( "../.vim.local" ) 
-	so ../.vim.local
-endif
-if filereadable( ".vim.local" ) 
-	so .vim.local
-endif
+" vim-rest-console
+let g:vrc_trigger = '<silent><Leader>r'
 
 set wildignore=*.swp,*.class,*.jar,*.png,*.jpeg,*.jpg,**/node_modules/**,*.map,**/coverage/**,**/generated/**/*.d.ts,**/generated/**/*.js,**/src/**/*.d.ts,**/tests/**/*.d.ts,**/src/*.d.ts,build/**,**/*.tgz
 let NERDTreeRespectWildIgnore=1
