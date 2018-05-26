@@ -164,4 +164,4 @@ for_window [class="Firefox"] border none
 exec insync start
 
 exec slack
-assign [class="Slack"] 1
+assign [class="Slack"] 10
