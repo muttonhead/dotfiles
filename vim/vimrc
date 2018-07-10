@@ -26,7 +26,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'Valloric/YouCompleteMe'
 Plug 'altercation/vim-colors-solarized'
-Plug 'rking/ag.vim'
+Plug 'mileszs/ack.vim'
 Plug 'kien/ctrlp.vim'
 Plug 'd11wtq/ctrlp_bdelete.vim'
 Plug 'leafgarland/typescript-vim'
@@ -39,6 +39,7 @@ Plug 'mhinz/vim-startify'
 Plug 'vimwiki/vimwiki'
 Plug 'diepm/vim-rest-console'
 Plug 'chriskempson/base16-vim'
+Plug 'yssl/QFEnter'
 call plug#end()
 filetype plugin indent on
 
@@ -73,7 +74,11 @@ let g:ycm_semantic_triggers ={ 'elm' : ['.'] }
 :set completeopt-=preview
 
 " ag
-ca Ag Ag!
+let g:ackprg = 'ag --vimgrep --smart-case'
+cnoreabbrev ag Ack
+cnoreabbrev aG Ack
+cnoreabbrev Ag Ack
+cnoreabbrev AG Ack
 
 " tab setup
 :set tabstop=4
@@ -104,7 +109,7 @@ au FileType * setlocal comments-=:// comments+=f://
 :map <space> :w<CR>
 
 " search for current word
-nnoremap <silent><Leader>a :Ag! <cword><cr>
+nnoremap <silent><Leader>a :Ack <cword><cr>
 
 " quickfix
 nnoremap <silent><Leader>n :cn<cr>

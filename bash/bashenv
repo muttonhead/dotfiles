@@ -11,3 +11,9 @@ export PAGER=less
 export VS_BASE_DIR=$HOME/neverfail/deploy
 
 export PATH=~/.npm-global/bin:$PATH:$VS_BASE_DIR/bin
+
+export PATH=$PATH:~/open-source/flutter/bin:/opt/tools/bin
+
+# nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
