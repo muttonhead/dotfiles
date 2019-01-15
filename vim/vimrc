@@ -75,10 +75,12 @@ let g:ycm_semantic_triggers ={ 'elm' : ['.'] }
 
 " ag
 let g:ackprg = 'ag --vimgrep --smart-case'
-cnoreabbrev ag Ack
-cnoreabbrev aG Ack
-cnoreabbrev Ag Ack
-cnoreabbrev AG Ack
+cnoreabbrev ag Ack!
+cnoreabbrev aG Ack!
+cnoreabbrev Ag Ack!
+cnoreabbrev AG Ack!
+cnoreabbrev Ack Ack!
+nnoremap <silent><Leader>a :Ack <cword><cr>
 
 " tab setup
 :set tabstop=4
@@ -108,8 +110,6 @@ au FileType * setlocal comments-=:// comments+=f://
 " map space to write
 :map <space> :w<CR>
 
-" search for current word
-nnoremap <silent><Leader>a :Ack <cword><cr>
 
 " quickfix
 nnoremap <silent><Leader>n :cn<cr>
