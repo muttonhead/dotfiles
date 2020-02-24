@@ -173,3 +173,7 @@ elif type compctl &>/dev/null; then
   compctl -K _pm2_completion + -f + pm2
 fi
 ###-end-pm2-completion-###
+
+# tabtab source for slss package
+# uninstall by removing these lines or running `tabtab uninstall slss`
+[[ -f /home/corey/.npm/_npx/12722/lib/node_modules/serverless/node_modules/tabtab/.completions/slss.zsh ]] && . /home/corey/.npm/_npx/12722/lib/node_modules/serverless/node_modules/tabtab/.completions/slss.zsh. "/home/corey/.acme.sh/acme.sh.env"

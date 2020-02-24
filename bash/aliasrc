@@ -25,3 +25,6 @@ alias j8="sudo archlinux-java set java-8-jdk"
 alias nb="npm run build"
 alias ni="npm i"
 alias ns="NODE_ENV=dev-local npm run start:watch"
+
+# k8s
+alias kc=kubectl
