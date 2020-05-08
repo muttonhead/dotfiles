@@ -28,3 +28,6 @@ alias ns="NODE_ENV=dev-local npm run start:watch"
 
 # k8s
 alias kc=kubectl
+
+# terraform
+alias tf=terraform

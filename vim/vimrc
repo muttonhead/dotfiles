@@ -36,14 +36,14 @@ Plug 'rhysd/committia.vim'
 Plug 'tpope/vim-speeddating'
 Plug 'mxw/vim-jsx'
 Plug 'mhinz/vim-startify'
-Plug 'vimwiki/vimwiki'
+"Plug 'vimwiki/vimwiki'
 Plug 'diepm/vim-rest-console'
 Plug 'chriskempson/base16-vim'
 Plug 'yssl/QFEnter'
 Plug 'cespare/vim-toml'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
+"Plug 'plasticboy/vim-markdown'
 call plug#end()
 filetype plugin indent on
 
