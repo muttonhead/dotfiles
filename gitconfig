@@ -28,5 +28,10 @@
 	f = fetch --all
 	rbc = rebase --continue
 	rba = rebase --abort
-	pom = push origin master
   po = push origin HEAD
+
+[includeIf "gitdir:~/work/neverfailcc/"]
+	path = ~/work/neverfailcc/.gitconfig
+
+[includeIf "gitdir:~/work/devsupply/"]
+	path = ~/work/devsupply/.gitconfig

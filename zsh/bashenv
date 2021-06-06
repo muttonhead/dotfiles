@@ -1,0 +1,7 @@
+# Set editor
+export EDITOR=vim
+
+# Pager
+export PAGER=less
+
+export PATH=~/.npm-global/bin:$PATH

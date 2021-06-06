@@ -1,0 +1,14 @@
+# Default to vim
+alias vi=vim
+
+# Colorized outputs
+alias ls="ls -al --color=auto"
+
+# k8s
+alias k=kubectl
+
+# terraform
+alias tf=terraform
+
+# git
+alias g=git

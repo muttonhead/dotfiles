@@ -36,18 +36,19 @@ Plug 'rhysd/committia.vim'
 Plug 'tpope/vim-speeddating'
 Plug 'mxw/vim-jsx'
 Plug 'mhinz/vim-startify'
-"Plug 'vimwiki/vimwiki'
+Plug 'vimwiki/vimwiki'
 Plug 'diepm/vim-rest-console'
 Plug 'chriskempson/base16-vim'
 Plug 'yssl/QFEnter'
 Plug 'cespare/vim-toml'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'godlygeek/tabular'
+Plug 'hashivim/vim-terraform'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'jvirtanen/vim-hcl'
 "Plug 'plasticboy/vim-markdown'
 call plug#end()
 filetype plugin indent on
-
-" let g_airline_theme='solarized'
 
 " Ctrl-P
 " let g:ctrlp_map = '<Leader>t'
@@ -64,8 +65,10 @@ let g:ctrlp_show_hidden = 1
 nnoremap <silent> <C-N> :NERDTreeToggle<CR>
 let g:NERDTreeDirArrows=0
 let g:NERDTreeWinSize=35
+let g:NERDTreeShowHidden=1
 
-" solarized colors
+" colors
+syntax on
 syntax enable
 set background=dark
 colorscheme solarized
@@ -128,10 +131,12 @@ let g:jsx_ext_required = 0
 autocmd FileType json setlocal shiftwidth=2 tabstop=2 expandtab
 
 " vimwiki
-let g:vimwiki_list = [{'path': '~/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]
+let g:vimwiki_list = [{'path': '~/wiki/', 'syntax': 'markdown', 'ext': '.md'}]
 
 " vim-rest-console
 let g:vrc_trigger = '<silent><Leader>r'
 
-set wildignore=*.swp,*.class,*.jar,*.png,*.jpeg,*.jpg,**/node_modules/**,*.map,**/coverage/**,**/generated/**/*.d.ts,**/generated/**/*.js,**/src/**/*.d.ts,**/tests/**/*.d.ts,**/src/*.d.ts,build/**,**/*.tgz
+set wildignore=*.swp,*.class,*.jar,*.png,*.jpeg,*.jpg,**/node_modules/**,*.map,**/coverage/**,**/generated/**/*.d.ts,**/generated/**/*.js,**/src/**/*.d.ts,**/tests/**/*.d.ts,**/src/*.d.ts,build/**,**/*.tgz,**/.terragrunt-cache/**,.terraform.lock.hcl
 let NERDTreeRespectWildIgnore=1
+
+set pastetoggle=<F2>

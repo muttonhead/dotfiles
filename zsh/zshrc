@@ -1,11 +1,11 @@
 # Path to your oh-my-zsh installation.
-ZSH=~/.oh-my-zsh/
+ZSH=/usr/share/oh-my-zsh/
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="agnoster"
+#ZSH_THEME="robbyrussel"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -49,15 +49,30 @@ DISABLE_AUTO_UPDATE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(aws docker docker-compose git gulp mvn node npm redis-cli kubectl helm yarn)
+plugins=( \
+	aws \
+	docker \
+	docker-compose \
+	git \
+	mvn \
+	node \
+	npm \
+	kubectl \
+	helm \
+	yarn \
+	archlinux \
+	systemd \
+  vi-mode \
+)
 
 # User configuration
 
 export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$PATH:/home/corey/.gem/ruby/2.7.0/bin
 
 # Set environment variables
-if [ -f ~/dotfiles/bash/aliasrc ]; then
-	source ~/dotfiles/bash/bashenv
+if [ -f ~/dotfiles/zsh/aliasrc ]; then
+	source ~/dotfiles/zsh/bashenv
 fi
 
 # Set dircolors
@@ -91,8 +106,8 @@ export PAGER='less'
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-if [ -f ~/dotfiles/bash/aliasrc ]; then
-	source ~/dotfiles/bash/aliasrc
+if [ -f ~/dotfiles/zsh/aliasrc ]; then
+	source ~/dotfiles/zsh/aliasrc
 fi
 
 ZSH_CACHE_DIR=$HOME/.oh-my-zsh-cache
@@ -101,12 +116,6 @@ if [[ ! -d $ZSH_CACHE_DIR ]]; then
 fi
 
 source $ZSH/oh-my-zsh.sh
-
-export NPM_TOKEN=b0c8a150-b853-479c-96d6-78f42a37cb07
-export DEFAULT_USER=corey
-# source /usr/share/nvm/init-nvm.sh
-
-bindkey -v
 
 ###-begin-services-completion-###
 if type compdef &>/dev/null; then
@@ -133,47 +142,57 @@ fi
 # base16-shell
 BASE16_SHELL=$HOME/.config/base16-shell/
 [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
-###-begin-pm2-completion-###
-### credits to npm for the completion file model
-#
-# Installation: pm2 completion >> ~/.bashrc  (or ~/.zshrc)
-#
-
-COMP_WORDBREAKS=${COMP_WORDBREAKS/=/}
-COMP_WORDBREAKS=${COMP_WORDBREAKS/@/}
-export COMP_WORDBREAKS
-
-if type complete &>/dev/null; then
-  _pm2_completion () {
-    local si="$IFS"
-    IFS=$'\n' COMPREPLY=($(COMP_CWORD="$COMP_CWORD" \
-                           COMP_LINE="$COMP_LINE" \
-                           COMP_POINT="$COMP_POINT" \
-                           pm2 completion -- "${COMP_WORDS[@]}" \
-                           2>/dev/null)) || return $?
-    IFS="$si"
-  }
-  complete -o default -F _pm2_completion pm2
-elif type compctl &>/dev/null; then
-  _pm2_completion () {
-    local cword line point words si
-    read -Ac words
-    read -cn cword
-    let cword-=1
-    read -l line
-    read -ln point
-    si="$IFS"
-    IFS=$'\n' reply=($(COMP_CWORD="$cword" \
-                       COMP_LINE="$line" \
-                       COMP_POINT="$point" \
-                       pm2 completion -- "${words[@]}" \
-                       2>/dev/null)) || return $?
-    IFS="$si"
-  }
-  compctl -K _pm2_completion + -f + pm2
-fi
-###-end-pm2-completion-###
 
 # tabtab source for slss package
 # uninstall by removing these lines or running `tabtab uninstall slss`
 [[ -f /home/corey/.npm/_npx/12722/lib/node_modules/serverless/node_modules/tabtab/.completions/slss.zsh ]] && . /home/corey/.npm/_npx/12722/lib/node_modules/serverless/node_modules/tabtab/.completions/slss.zsh. "/home/corey/.acme.sh/acme.sh.env"
+
+# begin direnv
+eval "$(direnv hook zsh)"
+# end direnv
+
+# begin nvm
+[ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.nvm"
+source /usr/share/nvm/nvm.sh
+source /usr/share/nvm/bash_completion
+source /usr/share/nvm/install-nvm-exec
+# end nvm
+
+# tabtab source for packages
+# uninstall by removing these lines
+[[ -f ~/.config/tabtab/__tabtab.zsh ]] && . ~/.config/tabtab/__tabtab.zsh || true
+
+bindkey -v
+bindkey '^[/' history-incremental-search-backward
+zstyle ':completion:*' insert-tab false
+
+# starhip zoom
+eval "$(starship init zsh)"
+
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
+# place this after nvm initialization!
+autoload -U add-zsh-hook
+load-nvmrc() {
+  local node_version="$(nvm version)"
+  local nvmrc_path="$(nvm_find_nvmrc)"
+
+  if [ -n "$nvmrc_path" ]; then
+    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+
+    if [ "$nvmrc_node_version" = "N/A" ]; then
+      nvm install
+    elif [ "$nvmrc_node_version" != "$node_version" ]; then
+      nvm use
+    fi
+  elif [ "$node_version" != "$(nvm version default)" ]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
+add-zsh-hook chpwd load-nvmrc
+load-nvmrc
+
+# stern
+source <(stern --completion=zsh)
